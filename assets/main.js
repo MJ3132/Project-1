@@ -1,5 +1,6 @@
-<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+//<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
 // Initialize Firebase
+
 var config = {
 apiKey: "AIzaSyDarVTsZc6k-a491eF6C8PgcSIwXqf0xNY",
 authDomain: "signup-signin-58064.firebaseapp.com",
@@ -9,6 +10,8 @@ storageBucket: "signup-signin-58064.appspot.com",
 messagingSenderId: "175269563861"
 };
 firebase.initializeApp(config);
+
+var database = firebase.database();
     
 var txtEmail = document.getElementById('textemail');
 var txtPassword = document.getElementById('passwordtext');

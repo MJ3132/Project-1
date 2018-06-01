@@ -10,10 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="assets/main.css">
     <title>Project-1></title>
+    
+    
 </head>
 
 <body>
-
+    <div id='login-tracker'>you logged in</div>
     <a class="weatherwidget-io" href="https://forecast7.com/en/43d65n79d38/toronto/" data-label_1="TORONTO" data-label_2="WEATHER"
         data-theme="original">TORONTO WEATHER</a>
     <script>
@@ -29,12 +31,12 @@
             <label for="email">
                 <b>Email</b>
             </label>
-            <input type="text" placeholder="Enter Email" name="email" id= "emailtext" required>
+            <input type="text" placeholder="Enter Email" name="email" id="emailtext" required>
 
             <label for="psw">
                 <b>Password</b>
             </label>
-            <input type="password" placeholder="Enter Password" name="psw" id = "passwordtext" required>
+            <input type="password" placeholder="Enter Password" name="psw" id="passwordtext" required>
 
             <p>By creating an account you agree to our
                 <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
@@ -46,12 +48,99 @@
             </div>
         </div>
     </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-auth.js"></script>
+    
+    <script>
+        var config = {
+            apiKey: "AIzaSyDarVTsZc6k-a491eF6C8PgcSIwXqf0xNY",
+            authDomain: "signup-signin-58064.firebaseapp.com",
+            databaseURL: "https://signup-signin-58064.firebaseio.com",
+            projectId: "signup-signin-58064",
+            storageBucket: "signup-signin-58064.appspot.com",
+            messagingSenderId: "175269563861"
+        };
+        firebase.initializeApp(config);
+        
+    </script>
+    
+    <script>
+        
+    
+        const txtEmail = $('#emailtext');
+        const txtPassword = $('#passwordtext');
+        const signUpBtn = $('#signup');
+        const signInBTn = $('#signin');
+        const logOutBtn = $('#logout');
+    
+        //add sign In event
+        signInBTn.on("click", function () {
+            
+            const email = txtEmail.val();
+            const pass = txtPassword.val();
+            // sign in 
+            firebase.auth().signInWithEmailAndPassword(email, pass)
+            .then(function() {
+                console.log('you logged in'); 
+            })
+            .catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // ...
+                console.log(errorCode, errorMessage);
+            });
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="main.js"></script>
+        });
+        //sign up event
+        signUpBtn.on("click", function (event){
+            event.preventDefault();
+            const email = txtEmail.val();
+            const pass = txtPassword.val();
+            // sign up a user
+            firebase.auth().createUserWithEmailAndPassword(email, pass)
+            .then(function() {
+                console.log('you signed up');  
 
+            })
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+                // ...
+                }); 
+        });
+
+        logOutBtn.on('click', function(event){
+            event.preventDefault();
+            firebase.auth().signOut();
+            console.log('you logged out');
+        });
+
+        firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
+            var providerData = user.providerData;
+            $('#login-tracker').show();
+
+            // ...
+        } else {
+            // User is signed out.
+            // ...
+            $('#login-tracker').hide();
+
+        }
+        });
+
+    </script>
 </body>
-
 </html>
