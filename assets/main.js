@@ -7,6 +7,7 @@ var config = {
     storageBucket: "signup-signin-58064.appspot.com",
     messagingSenderId: "175269563861"
 };
+
 firebase.initializeApp(config);
 
 
@@ -49,9 +50,9 @@ $.ajax({
     console.log(articles);  
 
     // articles.forEach(function(article) {
-    //     var articleDiv = document.createElement('div');
-    //     articleDiv.innerHTML = JSON.stringify(article);
-    //     $("#show").append(articleDiv);
+    // var articleDiv = document.createElement('div');
+    // articleDiv.innerHTML = JSON.stringify(article);
+    // $("#show").append(articleDiv);
     //})
 
 }).fail(function (err) {
