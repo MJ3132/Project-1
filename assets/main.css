@@ -84,3 +84,20 @@
                 width: 100%;
             }
         }
+
+
+ /* Change styles for cancel button and signup button on extra small screens */
+
+ .random-search {
+
+    padding: 10px;
+    box-sizing: border-box;
+    background: blue;
+
+ }
+
+ /* all pages hidden by default */
+ [class*="-page"] {
+     display: none;
+ }
+ 
