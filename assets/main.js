@@ -7,16 +7,13 @@ var config = {
     messagingSenderId: "175269563861"
 };
 firebase.initializeApp(config);
-
 const txtEmail = $('#emailtext');
 const txtPassword = $('#passwordtext');
 const signUpBtn = $('#signup');
 const signInBTn = $('#signin');
 const logOutBtn = $('#logout');
-
 //add sign In event
 signInBTn.on("click", function () {
-    
     const email = txtEmail.val();
     const pass = txtPassword.val();
     // sign in 
@@ -31,7 +28,6 @@ signInBTn.on("click", function () {
         // ...
         console.log(errorCode, errorMessage);
     });
-
 });
 //sign up event
 signUpBtn.on("click", function (event){
@@ -42,7 +38,6 @@ signUpBtn.on("click", function (event){
     firebase.auth().createUserWithEmailAndPassword(email, pass)
     .then(function() {
         console.log('you signed up');  
-
     })
     .catch(function(error) {
         // Handle Errors here.
@@ -50,15 +45,13 @@ signUpBtn.on("click", function (event){
         var errorMessage = error.message;
         console.log(errorCode, errorMessage);
         // ...
-        }); 
+    }); 
 });
-
 logOutBtn.on('click', function(event){
     event.preventDefault();
     firebase.auth().signOut();
     console.log('you logged out');
 });
-
 firebase.auth().onAuthStateChanged(function(user) {
 if (user) {
     // User is signed in.
@@ -71,13 +64,11 @@ if (user) {
     var providerData = user.providerData;
     $('#login-tracker').show();
     logOutBtn.show();
-
-    // ...
-} else {
+      // ...
+    } else {
     // User is signed out.
     // ...
     $('#login-tracker').hide();
     logOutBtn.hide();
-
-}
+    }
 });
