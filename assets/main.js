@@ -7,10 +7,9 @@
 var queryURL = "https://api.predicthq.com/v1/events?limit=1";
 
 var categories = ["conferences", "expos", "concerts", "festivals"];
-
 var search = "";
-
 var label = "";
+var timezone ='toronto'; 
 
 
 $("#submmit-event").on("click", function () {
@@ -43,6 +42,52 @@ $("#submmit-event").on("click", function () {
 // End Call Label Response AJAX
 
 
+// Location parameter
+
+
+$("#location").on("click", function () {
+
+    // get random category to display
+
+    var ranNum = Math.floor(Math.random() * (categories.length - 1))
+
+    search = categories[ranNum];
+
+    queryURL += "&" + $.param({
+        'location': search,
+        'timezone': toronto
+
+
+    });
+
+    $.ajax({
+        url: queryURL,
+        method: 'GET',
+        contentType: "application/json",
+        headers: {
+            Authorization: "Bearer 4SepDTuqqTQQgPSM68gLJpoJJoEpSB",
+            Accept: "application/json"
+
+        }
+    }).done(function (response) {
+        console.log(response);
+
+        var answer = response.results[0];
+
+        var responseDiv = $('<div>');
+        responseDiv.html(JSON.stringify(response.results[0]));
+
+        $('#answerContainer').append(responseDiv);
+
+    }).fail(function (err) {
+        // throw err;
+    });
+});
+
+// End Location parameter
+
+
+
 // Suprise Me button aka Gives Random Results
 
 $("#supriseMe").on("click", function () {
@@ -70,6 +115,8 @@ $("#supriseMe").on("click", function () {
         }
     }).done(function (response) {
         console.log(response);
+
+        var answer = response.results[0];
 
         var responseDiv = $('<div>');
         responseDiv.html(JSON.stringify(response.results[0]));
