@@ -64,11 +64,18 @@ if (user) {
     var providerData = user.providerData;
     $('#login-tracker').show();
     logOutBtn.show();
+    signInBTn.hide();
+    signUpBtn.hide();
+    $("#initialstuff").hide();
       // ...
     } else {
     // User is signed out.
     // ...
     $('#login-tracker').hide();
     logOutBtn.hide();
+    signInBTn.show();
+    signUpBtn.show();
+    $("#initialstuff").show();
+
     }
 });
