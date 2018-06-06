@@ -10,15 +10,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="assets/main.css">
     <title>Project-1></title>
+    
+    
 </head>
 
 <body>
-    <!-- weather widget -->
+    <div id='login-tracker'>you logged in</div>
     <a class="weatherwidget-io" href="https://forecast7.com/en/43d65n79d38/toronto/" data-label_1="TORONTO" data-label_2="WEATHER"
         data-theme="original">TORONTO WEATHER</a>
     <script>
         !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
     </script>
+    
     <!-- end weather widget -->
 
 
@@ -26,7 +29,6 @@
 
     <div class="signup-page">
         <form action="/action_page.php" style="border:1px solid #ccc">
-
             <h1>Sign Up</h1>
             <p>Please fill in this form to create an account.</p>
             <hr>
@@ -48,7 +50,7 @@
                 <button type="button" class="cancelbtn" id='signin'>Sign In </button>
                 <button type="submit" class="signupbtn" id='signup'>Sign Up</button>
                 <button type="submit" class="signupbtn" id='logout'>Log Out</button>
-            </div>
+            </div> 
         </form>
     </div>
     <!-- End sign up form -->
@@ -84,8 +86,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-auth.js"></script>
     <script src="assets/main.js"></script>
 
 </body>
-
 </html>
