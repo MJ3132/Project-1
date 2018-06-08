@@ -86,7 +86,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 // API Query URL + Parameters + AJAX CALLS
 
-var queryURL = "https://api.predicthq.com/v1/events?limit=3&country=CA&timezone=America/Toronto";
+var queryURL = "https://api.predicthq.com/v1/events/?limit=3&country=CA&timezone=America/Toronto";
 
 var categories = ["conferences", "expos", "concerts", "festivals"];
 var search = "";
