@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="assets/main.css">
     <title>Project-1></title>
-    
-    
+
+
 </head>
 
 <body>
@@ -21,7 +21,7 @@
     <script>
         !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
     </script>
-    
+
     <!-- end weather widget -->
 
 
@@ -50,7 +50,7 @@
                 <button type="button" class="cancelbtn" id='signin'>Sign In </button>
                 <button type="submit" class="signupbtn" id='signup'>Sign Up</button>
                 <button type="submit" class="signupbtn" id='logout'>Log Out</button>
-            </div> 
+            </div>
         </form>
     </div>
     <!-- End sign up form -->
@@ -65,22 +65,17 @@
             <h1> Suprise Me </h1>
             <p>Get suprised at the many event options you will find!</p>
             <hr>
-
-            <!-- <label for="event-description">
-                <b>What do you feel like doing?</b>
-            </label>
-            <input type="text" placeholder="what do you feel like doing?" name="event-description" id="event-input">
-            <button type="button" class="" id='submmit-event'>Lets go! </button> -->
+  
         </form>
 
-        <!--Location Button-->
-        <input type="text" placeholder="where are you located" name="event-description" id="event-input">
-        <button type="submit" class="descriptionbtn" id='submit'> Lets go ! </button> -->
-
-        <!--Random Event Button-->
+        <!--User input button-->
         <input type="text" placeholder="what do you feel like doing?" name="event-description" id="event-input">
-        <button type="submit" class="descriptionbtn" id='submit'> Lets go ! </button> -->
-    </div>
+        <button type="submit" class="descriptionbtn" id='submit-input'> Lets go ! </button>
+
+        <!--Suprise Me button aka Random Event -->
+        <button type="submit" class="suprise" id='supriseMe'> Suprise-Me ! </button> 
+    </div>  
+
 
     <div id="answerContainer">
 
@@ -96,4 +91,5 @@
     <script src="assets/main.js"></script>
 
 </body>
+
 </html>
