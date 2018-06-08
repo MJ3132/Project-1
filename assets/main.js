@@ -1,3 +1,77 @@
+///user location retrieval
+//working on the test button to get geo-relevant results
+$('#test').on('click',function(){
+    console.log('hi');
+    getLocation();
+});
+/////
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        console.log("Geolocation is not supported by this browser.");
+    }
+};
+function showPosition(position) {
+    // x.innerHTML = "Latitude: " + position.coords.latitude + 
+    // "<br>Longitude: " + position.coords.longitude;
+    console.log(position.coords.latitude, position.coords.longitude);
+    var lat = position.coords.latitude;
+    var long = position.coords.longitude;
+    console.log(lat, long);
+    var latlng = String(lat + ',' + long);
+    console.log(latlng)
+    //run call in here
+    var settingsGoogle = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlng + "&key=AIzaSyCjU4tP9cgPggLk_lGUSzkwW75GgrsyLCY",
+        "method": "GET",
+    };
+    $.ajax(settingsGoogle).done(function (response) {
+        //extracted the info we need 
+        var country = response.results[0].address_components[6].long_name;
+        var stateProvince = response.results[0].address_components[5].long_name;
+        var city = response.results[0].address_components[3].long_name;
+        console.log(city,stateProvince, country);
+        $("#city").text("You are located in"+" "+city+", "+stateProvince+", "+country)
+    });
+    ///run an ajax call to predictHQ api and get a result
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": `https://api.predicthq.com/v1/events?category=conferences%2Cexpos%2Cconcerts%2Cfestivals%2Cperforming-arts%2Csports%2Ccommunity&within=10km@${lat}%2C${long}`,
+        "method": "GET",
+        "headers": {
+          "authorization": "Bearer 4SepDTuqqTQQgPSM68gLJpoJJoEpSB",
+        }
+      };
+      
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+      });
+
+};
+
+//deals with error for geolocation
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+};
+
+///user authentication stuff 
 var config = {
     apiKey: "AIzaSyDarVTsZc6k-a491eF6C8PgcSIwXqf0xNY",
     authDomain: "signup-signin-58064.firebaseapp.com",
@@ -62,42 +136,26 @@ if (user) {
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
     var providerData = user.providerData;
-    $('#login-tracker').show();
-    logOutBtn.show();
-    signInBTn.hide();
-    signUpBtn.hide();
-    $("#initialstuff").hide();
-      // ...
+    renderPage('aftersignin');
     } else {
     // User is signed out.
     // ...
-    $('#login-tracker').hide();
-    logOutBtn.hide();
-    signInBTn.show();
-    signUpBtn.show();
-    $("#initialstuff").show();
+    renderPage('beforesignin');
 
     }});
+
 // API Query URL + Parameters + AJAX CALLS
-
 var queryURL = "https://api.predicthq.com/v1/events?limit=1";
-
 var categories = ["conferences", "expos", "concerts", "festivals"];
-
 var search = "";
-
 var label = "";
-
-
-$("#submmit-event").on("click", function () {
-    // get random category to display
+var queryURL = queryURL + 
+$("#submit-event").on("click", function () {
     label = $('#event-input').val().trim();
     queryURL += "&" + $.param({
-        'labels': label,
+        'labels': label
     });
-
     console.log("query URL" + queryURL);
-
     // Call Label Response AJAX
     $.ajax({
         url: queryURL,
@@ -106,35 +164,27 @@ $("#submmit-event").on("click", function () {
         headers: {
             Authorization: "Bearer 4SepDTuqqTQQgPSM68gLJpoJJoEpSB",
             Accept: "application/json"
-
         }
     }).done(function (response) {
         console.log(response);
-
+        var responseDiv = $('<div>');
+        responseDiv.html(JSON.stringify(response.results[0]));
+        $('#answerContainer').append(responseDiv);
     }).fail(function (err) {
         // throw err;
     });
 });
-
 // End Call Label Response AJAX
 
 
 // Suprise Me button aka Gives Random Results
-
 $("#supriseMe").on("click", function () {
-
     // get random category to display
-
     var ranNum = Math.floor(Math.random() * (categories.length - 1))
-
     search = categories[ranNum];
-
     queryURL += "&" + $.param({
         'category': search,
-
-
     });
-
     $.ajax({
         url: queryURL,
         method: 'GET',
@@ -142,24 +192,23 @@ $("#supriseMe").on("click", function () {
         headers: {
             Authorization: "Bearer 4SepDTuqqTQQgPSM68gLJpoJJoEpSB",
             Accept: "application/json"
-
         }
     }).done(function (response) {
         console.log(response);
-
         var responseDiv = $('<div>');
         responseDiv.html(JSON.stringify(response.results[0]));
-
         $('#answerContainer').append(responseDiv);
-
     }).fail(function (err) {
         // throw err;
     });
 });
+
+
+
 // Page Rendering Function ( shows specific page, while hiding the other containers with the class of -page)
 function isPageShownCurrently(page) {
     return false;
-}
+};
 // [class*] all classes that have or end with]
 function renderPage(page) {
     if (!$(`.${page}-page`).is(':visible')) {
@@ -167,20 +216,14 @@ function renderPage(page) {
             $(`.${page}-page`).show(400);
         });
     }
-}
+};
 // End page rendering function
-
-
 // hide all pages except ...
 
-
 //delete button
-
 $(document).on("click", "#delete", removeTask);
-
 // Function to remove a task.
 function removeTask() {
-
     // Grab the closest div to the element that was clicked and remove it.
     // (In this case, the closest element is the one that's encapsulating it.)
     $(this).closest("div").remove();

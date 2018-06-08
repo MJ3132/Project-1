@@ -15,19 +15,8 @@
 </head>
 
 <body>
-    <div id='login-tracker'>you logged in</div>
-    <a class="weatherwidget-io" href="https://forecast7.com/en/43d65n79d38/toronto/" data-label_1="TORONTO" data-label_2="WEATHER"
-        data-theme="original">TORONTO WEATHER</a>
-    <script>
-        !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
-    </script>
-    
-    <!-- end weather widget -->
-
-
-    <!-- sign up form -->
-
-    <div class="signup-page">
+    <div class='beforesignin-page'>
+        <!-- put everything user should see before loggin in or signing up -->
         <form action="/action_page.php" style="border:1px solid #ccc">
             <h1>Sign Up</h1>
             <p>Please fill in this form to create an account.</p>
@@ -48,41 +37,35 @@
 
             <div class="clearfix">
                 <button type="button" class="cancelbtn" id='signin'>Sign In </button>
-                <button type="submit" class="signupbtn" id='signup'>Sign Up</button>
-                <button type="submit" class="signupbtn" id='logout'>Log Out</button>
+                <button type="submit" class="signupbtn" id='signup'>Sign Up</button>            
             </div> 
         </form>
     </div>
-    <!-- End sign up form -->
-
-
-
-    <!-- Page 2 Form starts here -->
-
-
-    <div class="surprise-page">
-        <form action="/action_page.php" style="border:1px solid #ccc">
-            <h1> Suprise Me </h1>
-            <p>Get suprised at the many event options you will find!</p>
-            <hr>
-
-            <!-- <label for="event-description">
-                <b>What do you feel like doing?</b>
-            </label>
-            <input type="text" placeholder="what do you feel like doing?" name="event-description" id="event-input">
-            <button type="button" class="" id='submmit-event'>Lets go! </button> -->
-        </form>
-
-        <input type="text" placeholder="what do you feel like doing?" name="event-description" id="event-input">
-        <button type="submit" class="descriptionbtn" id='submit'> Lets go ! </button> -->
+    
+    <div class="aftersignin-page">
+        <!-- put everything user should see after having logged in -->
+        <!-- dealing with user location, will shift html around later most likely -->
+        <!--  -->
+        <a class="weatherwidget-io" href="https://forecast7.com/en/43d65n79d38/toronto/" data-label_1="TORONTO" data-label_2="WEATHER"
+            data-theme="original">TORONTO WEATHER</a>
+        <script>
+            !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+        </script>
+        <!-- end weather widget -->
+        <div class="clearfix">
+            <button type="submit" class="signupbtn" id='logout'>Log Out</button>            
+        </div>
+        <div id="userlocation">
+            <button type="button" id='test'>Give me an event</button>
+            <h3 id="city"></h3>
+        </div>
+        <div id="apiresult">
+        </div>
     </div>
 
-    <div id="answerContainer">
-
-
-    </div>
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
