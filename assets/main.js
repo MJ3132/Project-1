@@ -171,9 +171,6 @@ $("#supriseMe").on("click", function () {
     queryURL += "&" + $.param({
         'category': search,
 
-        'scope': scope
-
-
     });
 
     $.ajax({
