@@ -1,3 +1,7 @@
+let userlocation = {
+    longitude: null,
+    latitude: null
+};
 ///user location retrieval
 //working on the test button to get geo-relevant results
 $('#test').on('click',function(){
@@ -18,6 +22,8 @@ function showPosition(position) {
     console.log(position.coords.latitude, position.coords.longitude);
     var lat = position.coords.latitude;
     var long = position.coords.longitude;
+    userlocation.latitude = lat;
+    userlocation.longitude = long;
     console.log(lat, long);
     var latlng = String(lat + ',' + long);
     console.log(latlng)
@@ -125,6 +131,7 @@ logOutBtn.on('click', function(event){
     event.preventDefault();
     firebase.auth().signOut();
     console.log('you logged out');
+    console.log(userlocation.latitude, userlocation.longitude);
 });
 firebase.auth().onAuthStateChanged(function(user) {
 if (user) {
@@ -229,4 +236,4 @@ function removeTask() {
     $(this).closest("div").remove();
 };
 // once signed render suprise me page 
-renderPage('signup');
+// renderPage('signup');
