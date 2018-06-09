@@ -31,21 +31,14 @@
                 <b>Password</b>
             </label>
             <input type="password" placeholder="Enter Password" name="psw" id="passwordtext" required>
-    
-  
-  
-    <div class="surprise-me-page">
-        <button id ="random-search">Suprise Me! </button>
-        <button onclick="renderPage('signup');">Go to sign up page</button>
-    </div>
 
             <div class="clearfix">
                 <button type="button" class="cancelbtn" id='signin'>Sign In </button>
-                <button type="submit" class="signupbtn" id='signup'>Sign Up</button>            
-            </div> 
+                <button type="submit" class="signupbtn" id='signup'>Sign Up</button>
+            </div>
         </form>
     </div>
-    
+
     <div class="aftersignin-page">
         <!-- put everything user should see after having logged in -->
         <!-- dealing with user location, will shift html around later most likely -->
@@ -57,17 +50,22 @@
         </script>
         <!-- end weather widget -->
         <div class="clearfix">
-            <button type="submit" class="signupbtn" id='logout'>Log Out</button>            
+            <button type="submit" class="signupbtn" id='logout'>Log Out</button>
         </div>
         <div id="userlocation">
             <button type="button" id='test'>Give me an event</button>
             <h3 id="city"></h3>
+            <div class="surprise-me-page">
+                <button id="random-search">Suprise Me! </button>
+                <button onclick="renderPage('signup');">Go to sign up page</button>
+            </div>
+
         </div>
         <div id="answer">
         </div>
     </div>
 
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

@@ -71,6 +71,8 @@ function showError(error) {
     }
 };
 
+
+
 ///user authentication stuff 
 var config = {
     apiKey: "AIzaSyDarVTsZc6k-a491eF6C8PgcSIwXqf0xNY",
@@ -151,7 +153,7 @@ var queryURL = "https://api.predicthq.com/v1/events?limit=1";
 var categories = ["conferences", "expos", "concerts", "festivals"];
 var search = "";
 var label = "";
-var queryURL = queryURL + 
+var queryURL = queryURL +
 $("#submit-event").on("click", function () {
     label = $('#event-input').val().trim();
     queryURL += "&" + $.param({
@@ -277,4 +279,4 @@ function removeTask() {
     $(this).closest("div").remove();
 };
 // once signed render suprise me page 
-// renderPage('signup');
+
