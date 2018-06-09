@@ -1,10 +1,9 @@
-///user location retrieval
-//working on the test button to get geo-relevant results
-$('#test').on('click',function(){
-    console.log('hi');
-    getLocation();
-});
-/////
+let userLocation;
+
+
+
+
+// 
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -12,15 +11,12 @@ function getLocation() {
         console.log("Geolocation is not supported by this browser.");
     }
 };
+
 function showPosition(position) {
-    // x.innerHTML = "Latitude: " + position.coords.latitude + 
-    // "<br>Longitude: " + position.coords.longitude;
-    console.log(position.coords.latitude, position.coords.longitude);
-    var lat = position.coords.latitude;
-    var long = position.coords.longitude;
-    console.log(lat, long);
-    var latlng = String(lat + ',' + long);
-    console.log(latlng)
+    userLocation = position.coords;
+    console.log(userLocation);
+    var latlng = String(userLocation.latitude + ',' + userLocation.longitude);
+    console.log(" about to reverse Geo Code", latlng)
     //run call in here
     var settingsGoogle = {
         "async": true,
@@ -33,24 +29,8 @@ function showPosition(position) {
         var country = response.results[0].address_components[6].long_name;
         var stateProvince = response.results[0].address_components[5].long_name;
         var city = response.results[0].address_components[3].long_name;
-        console.log(city,stateProvince, country);
-        $("#city").text("You are located in"+" "+city+", "+stateProvince+", "+country)
+    
     });
-    ///run an ajax call to predictHQ api and get a result
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": `https://api.predicthq.com/v1/events?category=conferences%2Cexpos%2Cconcerts%2Cfestivals%2Cperforming-arts%2Csports%2Ccommunity&within=10km@${lat}%2C${long}`,
-        "method": "GET",
-        "headers": {
-          "authorization": "Bearer 4SepDTuqqTQQgPSM68gLJpoJJoEpSB",
-        }
-      };
-      
-      $.ajax(settings).done(function (response) {
-        console.log(response);
-      });
-
 };
 
 //deals with error for geolocation
@@ -71,8 +51,6 @@ function showError(error) {
     }
 };
 
-
-
 ///user authentication stuff 
 var config = {
     apiKey: "AIzaSyDarVTsZc6k-a491eF6C8PgcSIwXqf0xNY",
@@ -88,44 +66,42 @@ const txtPassword = $('#passwordtext');
 const signUpBtn = $('#signup');
 const signInBTn = $('#signin');
 const logOutBtn = $('#logout');
-
 //add sign In event
 signInBTn.on("click", function () {
     const email = txtEmail.val();
     const pass = txtPassword.val();
-
-    // sign in process authentification
+    // sign in 
     firebase.auth().signInWithEmailAndPassword(email, pass)
-        .then(function () {
-            console.log('you logged in');
-        })
-        .catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ...
-            console.log(errorCode, errorMessage);
-        });
+    .then(function() {
+        console.log('you logged in'); 
+    })
+    .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+        console.log(errorCode, errorMessage);
+    });
 });
 //sign up event
-signUpBtn.on("click", function (event) {
+signUpBtn.on("click", function (event){
     event.preventDefault();
     const email = txtEmail.val();
     const pass = txtPassword.val();
     // sign up a user
     firebase.auth().createUserWithEmailAndPassword(email, pass)
-        .then(function () {
-            console.log('you signed up');
-        })
-        .catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-            // ...
-        });
+    .then(function() {
+        console.log('you signed up');  
+    })
+    .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ...
+    }); 
 });
-logOutBtn.on('click', function (event) {
+logOutBtn.on('click', function(event){
     event.preventDefault();
     firebase.auth().signOut();
     console.log('you logged out');
@@ -141,6 +117,7 @@ if (user) {
     var uid = user.uid;
     var providerData = user.providerData;
     renderPage('aftersignin');
+    getLocation();
     } else {
     // User is signed out.
     // ...
@@ -154,61 +131,10 @@ var categories = ["conferences", "expos", "concerts", "festivals"];
 var search = "";
 var label = "";
 var queryURL = queryURL +
-$("#submit-event").on("click", function () {
-    label = $('#event-input').val().trim();
-    queryURL += "&" + $.param({
-        'labels': label
-    });
-    console.log("query URL" + queryURL);
-    // Call Label Response AJAX
-    $.ajax({
-        url: queryURL,
-        method: 'GET',
-        contentType: "application/json",
-        headers: {
-            Authorization: "Bearer 4SepDTuqqTQQgPSM68gLJpoJJoEpSB",
-            Accept: "application/json"
-        }
-    }).done(function (response) {
-        console.log(response);
-
-        var answer = response.results
-        var posts = results.map(function (eachElement) {
-
-            return {
-
-            };
-        });
-
-        // posts(posts);
-
-        function renderPosts(posts) {
-
-            var html = "";
-            for (var i = 0; i < posts.length; i++) {
-                var postHTML = ` 
-                    < div class= "post" >
-                        <h1 class="post-title"> ${posts[i].title}  </h1>
-
-            </div >
-            `;
-                console.log(postHMTL);
-                html += postHMTL;
-            }
-            $('#answer').html(html);
-        }
-
-
-    }).fail(function (err) {
-        // throw err;
-    });
-});
-// End Call Label Response AJAX
-
 
 
 // Suprise Me button aka Gives Random Results
-$("#supriseMe").on("click", function () {
+$("#suprise-me").on("click", function () {
     // get random category to display
     var ranNum = Math.floor(Math.random() * (categories.length - 1))
     search = categories[ranNum];
@@ -216,7 +142,7 @@ $("#supriseMe").on("click", function () {
         'category': search,
     });
     $.ajax({
-        url: queryURL,
+        url: `https://api.predicthq.com/v1/events/?&within=10km@${userLocation.latitude}%2C${userLocation.longitude}`,
         method: 'GET',
         contentType: "application/json",
         headers: {
@@ -225,15 +151,17 @@ $("#supriseMe").on("click", function () {
         }
     }).done(function (response) {
         console.log(response);
+        console.log(userLocation.latitude);
+        console.log("hello world");
         var answer = response.results;
         console.log(answer);
         var content = answer.map(function (eachEvent) {
             console.log(eachEvent);
 
-            return { title: eachEvent.title 
-            
-                    };
-
+            return {
+                title: eachEvent.title,
+                duration: eachEvent.duration
+            };
 
         });
 
@@ -243,14 +171,16 @@ $("#supriseMe").on("click", function () {
             var postHTML = ` 
                 <div class="post">
                     <h1 class="post-title">${content[i].title}</h1>
+                    <h1 class="post-title">${content[i].duration}</h1>
+
                 </div>
             `;
             console.log(postHTML);
             html += postHTML;
         }
-        $('#answerContainer').html(html);
+        $('#answer-div').html(html);
     }).fail(function (err) {
-        // throw err;
+        // throw errs
     });
 });
 
@@ -262,13 +192,14 @@ function isPageShownCurrently(page) {
 };
 // [class*] all classes that have or end with]
 function renderPage(page) {
-    if (!$(`.${page} -page`).is(':visible')) {
+    if (!$(`.${page}-page`).is(':visible')) {
         $('[class*="-page"]').hide(400, function () {
-            $(`.${page} -page`).show(400);
+            $(`.${page}-page`).show(400);
         });
     }
 };
 // End page rendering function
+// hide all pages except ...
 
 //delete button
 $(document).on("click", "#delete", removeTask);
@@ -279,4 +210,4 @@ function removeTask() {
     $(this).closest("div").remove();
 };
 // once signed render suprise me page 
-
+// renderPage('signup');
