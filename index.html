@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="assets/main.css">
     <title>Project-1></title>
-    
-    
+
+
 </head>
 
 <body>
@@ -32,16 +32,13 @@
             </label>
             <input type="password" placeholder="Enter Password" name="psw" id="passwordtext" required>
 
-            <p>By creating an account you agree to our
-                <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-
             <div class="clearfix">
                 <button type="button" class="cancelbtn" id='signin'>Sign In </button>
-                <button type="submit" class="signupbtn" id='signup'>Sign Up</button>            
-            </div> 
+                <button type="submit" class="signupbtn" id='signup'>Sign Up</button>
+            </div>
         </form>
     </div>
-    
+
     <div class="aftersignin-page">
         <!-- put everything user should see after having logged in -->
         <!-- dealing with user location, will shift html around later most likely -->
@@ -53,17 +50,22 @@
         </script>
         <!-- end weather widget -->
         <div class="clearfix">
-            <button type="submit" class="signupbtn" id='logout'>Log Out</button>            
+            <button type="submit" class="signupbtn" id='logout'>Log Out</button>
         </div>
         <div id="userlocation">
-            <button type="button" id='test'>Give me an event</button>
+            
             <h3 id="city"></h3>
+            
+                <button id="suprise-me">Suprise Me! </button>
+                <!-- <button onclick="renderPage('signup');">Go to sign up page</button> -->
+          
         </div>
-        <div id="apiresult">
+        <div id="answer-div">
+            
         </div>
     </div>
 
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
@@ -74,4 +76,5 @@
     <script src="assets/main.js"></script>
 
 </body>
+
 </html>
