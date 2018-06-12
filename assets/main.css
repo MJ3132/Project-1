@@ -1,5 +1,6 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
+    background: url('/assets/app-background-blur-545331.jpg');
 }
 * {
     box-sizing: border-box
@@ -12,7 +13,7 @@ input[type=password] {
     margin: 5px 0 22px 0;
     display: inline-block;
     border: none;
-    background: #f1f1f1;
+    background: lightgray;
 }
 input[type=text]:focus,
 input[type=password]:focus {
@@ -25,8 +26,8 @@ hr {
 }
 /* Set a style for all buttons */
 button {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #829ca5;
+    color: lightgray;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -40,13 +41,14 @@ button:hover {
 /* Extra styles for the cancel button */
 .cancelbtn {
     padding: 14px 20px;
-    background-color: #f44336;
+    background-color:lightslategray;
 }
 /* Float cancel and signup buttons and add an equal width */
 .cancelbtn,
 .signupbtn {
     float: left;
     width: 50%;
+    margin-bottom: 0%;
 }
 /* Add padding to container elements */
 .container {
@@ -68,3 +70,47 @@ button:hover {
 div[class*="-page"] {
     display: none;
 }
+
+form {
+width: 50%;
+margin: auto;
+background-color: #343a40;
+border: 5px hidden #343a40;
+box-shadow: 0px 0px 0px 8px rgba(0,0,0,0.3);
+}
+
+.text{
+    text-align: center;
+    margin-top: 10px;
+}
+
+label {
+    margin-left: 10px;
+    color: grey;
+}
+
+nav {
+    height:20px;
+}
+
+footer {
+    width:100%;
+    height:50px;   /* Height of the footer */
+    background: #343a40;
+}
+
+#form-header{
+    font-weight: bold;
+    color: grey;
+    background-color: #343a40;
+    padding-top: 10px;
+}
+
+
+.div-wrapper {
+    min-height: calc(100vh - 50px);
+    padding-top: 300px;
+    background-image: url('app-background-blur-545331.jpg');
+    background-size: 944px 850px;
+}
+    

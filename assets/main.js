@@ -1,8 +1,4 @@
 let userLocation;
-
-
-
-
 // 
 function getLocation() {
     if (navigator.geolocation) {
@@ -11,7 +7,6 @@ function getLocation() {
         console.log("Geolocation is not supported by this browser.");
     }
 };
-
 function showPosition(position) {
     userLocation = position.coords;
     console.log(userLocation);
@@ -29,7 +24,6 @@ function showPosition(position) {
         var country = response.results[0].address_components[6].long_name;
         var stateProvince = response.results[0].address_components[5].long_name;
         var city = response.results[0].address_components[3].long_name;
-    
     });
 };
 
@@ -142,7 +136,7 @@ $("#suprise-me").on("click", function () {
         'category': search,
     });
     $.ajax({
-        url: `https://api.predicthq.com/v1/events/?&within=10km@${userLocation.latitude}%2C${userLocation.longitude}`,
+        url: `https://api.predicthq.com/v1/events/?limit=1&within=10km@${userLocation.latitude}%2C${userLocation.longitude}`,
         method: 'GET',
         contentType: "application/json",
         headers: {

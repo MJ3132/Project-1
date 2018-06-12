@@ -15,55 +15,68 @@
 </head>
 
 <body>
-    <div class='beforesignin-page'>
-        <!-- put everything user should see before loggin in or signing up -->
-        <form action="/action_page.php" style="border:1px solid #ccc">
-            <h1>Sign Up</h1>
-            <p>Please fill in this form to create an account.</p>
-            <hr>
+    <!-- <nav class="navbar navbar-dark bg-dark">
+        <div id='homepage-name'>
+            <a href=''>SurpriseMe</a>
+        </div>
+        <div id='right-side-nav'>
+            <a href='' id='about'>About</a>
+            <a href='' id='contact'>Contact</a>
+        </div>
+    </nav> -->
+    <div class="div-wrapper">
+        <div class='beforesignin-page'>
+            <!-- put everything user should see before loggin in or signing up -->
+            <form action="/action_page.php">
+                <p class='text' id="form-header">Sign In Or Create An Account</p>
+                <!-- <p class='text'>Please fill in this form to create an account.</p> -->
+                <label for="email">
+                    <b>Email</b>
+                </label>
+                <input type="text" placeholder="Enter Email" name="email" id="emailtext" required>
 
-            <label for="email">
-                <b>Email</b>
-            </label>
-            <input type="text" placeholder="Enter Email" name="email" id="emailtext" required>
+                <label for="psw">
+                    <b>Password</b>
+                </label>
+                <input type="password" placeholder="Enter Password" name="psw" id="passwordtext" required>
 
-            <label for="psw">
-                <b>Password</b>
-            </label>
-            <input type="password" placeholder="Enter Password" name="psw" id="passwordtext" required>
-
+                <div class="clearfix">
+                    <button type="button" class="cancelbtn" id='signin'>Sign In </button>
+                    <button type="submit" class="signupbtn" id='signup'>Sign Up</button>
+                </div>
+            </form>
+        </div>
+        <div class="aftersignin-page">
+            <!-- put everything user should see after having logged in -->
+            <!-- dealing with user location, will shift html around later most likely -->
+            <!--  -->
+            <a class="weatherwidget-io" href="https://forecast7.com/en/43d65n79d38/toronto/" data-label_1="TORONTO" data-label_2="WEATHER"
+                data-theme="original">TORONTO WEATHER</a>
+            <script>
+                !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+            </script>
+            <!-- end weather widget -->
             <div class="clearfix">
-                <button type="button" class="cancelbtn" id='signin'>Sign In </button>
-                <button type="submit" class="signupbtn" id='signup'>Sign Up</button>
+                <button type="submit" class="signupbtn" id='logout'>Log Out</button>
             </div>
-        </form>
-    </div>
-
-    <div class="aftersignin-page">
-        <!-- put everything user should see after having logged in -->
-        <!-- dealing with user location, will shift html around later most likely -->
-        <!--  -->
-        <a class="weatherwidget-io" href="https://forecast7.com/en/43d65n79d38/toronto/" data-label_1="TORONTO" data-label_2="WEATHER"
-            data-theme="original">TORONTO WEATHER</a>
-        <script>
-            !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
-        </script>
-        <!-- end weather widget -->
-        <div class="clearfix">
-            <button type="submit" class="signupbtn" id='logout'>Log Out</button>
-        </div>
-        <div id="userlocation">
+            <div id="userlocation">
+                
+                <h3 id="city"></h3>
+                
+                    <button id="suprise-me">Suprise Me! </button>
+                    <!-- <button onclick="renderPage('signup');">Go to sign up page</button> -->
             
-            <h3 id="city"></h3>
-            
-                <button id="suprise-me">Suprise Me! </button>
-                <!-- <button onclick="renderPage('signup');">Go to sign up page</button> -->
-          
-        </div>
-        <div id="answer-div">
-            
+            </div>
+            <div id="answer-div">
+                
+            </div>
         </div>
     </div>
+    <footer class="footer">
+        <div class="footer-container">
+            footer content
+        </div>
+    </footer>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
