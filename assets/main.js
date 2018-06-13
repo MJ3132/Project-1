@@ -1,7 +1,23 @@
 let userLocation;
 
 
+function reverseGeo(coordinates) {
+    // argument is a string type : lat,lng
+    var settingsGoogle = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + coordinates + "&key=AIzaSyCjU4tP9cgPggLk_lGUSzkwW75GgrsyLCY",
+        "method": "GET",
+    };
+    $.ajax(settingsGoogle).done(function (response) {
+        //extracted the info we need 
+        // var country = response.results[0].address_components[6].long_name;
+        // var stateProvince = response.results[0].address_components[5].long_name;
+        // var city = response.results[0].address_components[3].long_name;
+        console.log(response);
+    });
 
+};
 
 // 
 function getLocation() {
@@ -29,7 +45,7 @@ function showPosition(position) {
         var country = response.results[0].address_components[6].long_name;
         var stateProvince = response.results[0].address_components[5].long_name;
         var city = response.results[0].address_components[3].long_name;
-
+        console.log(response);
     });
 };
 
@@ -50,7 +66,6 @@ function showError(error) {
             break;
     }
 };
-
 ///user authentication stuff 
 var config = {
     apiKey: "AIzaSyDarVTsZc6k-a491eF6C8PgcSIwXqf0xNY",
@@ -126,66 +141,92 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
+//Next Button
+
+$('#next-option').on('click', function () {
+    var counter = 0;
+    var activePost = $('.post.active')
+    var nextActivePost = activePost.next();
+    activePost.removeClass('active');
+    if( nextActivePost.length > 0 ){
+        nextActivePost.addClass('active');
+    
+    } else {
+        activePost.siblings().first().addClass('active');
+        
+    }
+   
+ // End Next Button   
+
+})
+
 // API Query URL + Parameters + AJAX CALLS
-var queryURL = "https://api.predicthq.com/v1/events?limit=1";
-var categories = ["conferences", "expos", "concerts", "festivals"];
-var search = "";
-var label = "";
-var queryURL = queryURL +
+var categories = ["expos","concerts","festivals","performing-arts","sports","community","conferences"];
 
+// Suprise Me button aka Gives Random Results
+$("#suprise-me").on("click", function () {
+    document.querySelector('#answer-div').innerHTML='';
+    var category = categories[Math.floor(Math.random() * (categories.length + 1))]
+   
+ $.ajax({
+        url: `https://api.predicthq.com/v1/events/?within=10km@${userLocation.latitude}%2C${userLocation.longitude}&category=${category}`,
+        method: 'GET',
+        contentType: "application/json",
+        headers: {
+            Authorization: "Bearer 4SepDTuqqTQQgPSM68gLJpoJJoEpSB",
+            Accept: "application/json"
+        }
+    }).done(function (response) {
+        console.log(response);
 
-    // Suprise Me button aka Gives Random Results
-    $("#suprise-me").on("click", function () {
-        // get random category to display
-        var ranNum = Math.floor(Math.random() * (categories.length - 1))
-        search = categories[ranNum];
-        queryURL += "&" + $.param({
-            'category': search,
+        var answer = response.results;
+        console.log(answer);
+
+        var content = answer.map(function (eachEvent) {
+            console.log(eachEvent);
+
+            return {
+
+                title: eachEvent.title,
+                duration: eachEvent.duration,
+                location:  reverseGeo(eachEvent.location[1] + "," + eachEvent.location[0])
+            };
         });
-        $.ajax({
-            url: `https://api.predicthq.com/v1/events/?limit=1&within=10km@${userLocation.latitude}%2C${userLocation.longitude}`,
-            method: 'GET',
-            contentType: "application/json",
-            headers: {
-                Authorization: "Bearer 4SepDTuqqTQQgPSM68gLJpoJJoEpSB",
-                Accept: "application/json"
-            }
-        }).done(function (response) {
-            console.log(response);
+        console.log(content);
 
-            var answer = response.results;
-            console.log(answer);
+        var html = "";
+    
 
-            var content = answer.map(function (eachEvent) {
-                console.log(eachEvent);
 
-                return {
-                    title: eachEvent.title,
-                    duration: eachEvent.duration,
-                    location: eachEvent.location
-                };
-
-            });
-
-            console.log(content);
-            var html = "";
-            for (var i = 0; i < content.length; i++) {
-                var postHTML = ` 
-                <div class="post">
+        for (var i = 0; i < content.length; i++) {
+           
+            var postHTML = ` 
+            
+                <div class="post${i === 0 ? " active" : ""}">
+                    <p>${i+1}/${content.length}</p>
                     <h1 class="post-title">${content[i].title}</h1>
-                    <h1 class="post-duration">${content[i].duration}</h1>
-                    <h1 class="post-location">${content[i].location}</h1>
+                    <p class="post-duration">${content[i].description}</p>
+                    <h2 class="post-location">${content[i].location}</h2>
+                    <h2 class="post-location">${content[i].start}</h2>
+                    <h2 class="post-location">${content[i].end}</h2>
+                    <h2 class="post-duration">${content[i].duration}</h2>
 
                 </div>
             `;
-                // console.log(postHTML);
-                html += postHTML;
-            }
-            $('#answer-div').html(html);
-        }).fail(function (err) {
-            // throw errs
-        });
+
+         
+            console.log(postHTML);
+            html += postHTML;
+   
+        }
+      
+        $('#answer-div').html(html);
+  
+
+    }).fail(function (err) {
+        // throw errs
     });
+});
 
 
 
@@ -199,12 +240,12 @@ function renderPage(page) {
         $('[class*="-page"]').hide(400, function () {
             $(`.${page}-page`).show(400);
         });
-    }
+    };
 };
 // End page rendering function
 // hide all pages except ...
 
-//delete button
+delete button
 $(document).on("click", "#delete", removeTask);
 // Function to remove a task.
 function removeTask() {
@@ -212,6 +253,8 @@ function removeTask() {
     // (In this case, the closest element is the one that's encapsulating it.)
     $(this).closest("div").remove();
 };
+
+
 // once signed render suprise me page 
 // renderPage('signup');
 
@@ -235,7 +278,7 @@ function removeTask() {
 //         };
 //         posts.push(myObject);
 //     }
-    
+
     // optionally, use map to transform the data to
     // return a *NEW* array (doesn't modify the existing array)
     // with the new element
@@ -265,4 +308,9 @@ function removeTask() {
 //         html += postHMTL;
 //     }
 //     document.body.innerHTML = html;
-}
+// }
+
+
+   // // get random category to display
+    // // var ranNum = Math.floor(Math.random() * (categories.length -1))
+    // search = categories[ranNum];

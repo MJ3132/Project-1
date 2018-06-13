@@ -68,3 +68,41 @@ button:hover {
 div[class*="-page"] {
     display: none;
 }
+
+/* Answer display */
+
+ .post.active {
+    margin: 2px auto;
+    width: 60%;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://canadaumsonhoadois.files.wordpress.com/2016/06/13417571_1120451708016952_3252951837867309885_n.jpg?w=640')no-repeat white;
+    background-size: cover;
+    color: whitesmoke; 
+    text-align: center;
+    box-sizing: border-box;
+    border: 2px dotted salmon;
+    border-radius:  50px; 
+    opacity: 0.9;
+    filter: alpha(opacity=70); /* For IE8 and earlier */
+    display: block;
+    
+
+}
+
+.post {
+
+    margin: 2px auto;
+    width: 60%;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://canadaumsonhoadois.files.wordpress.com/2016/06/13417571_1120451708016952_3252951837867309885_n.jpg?w=640')no-repeat white;
+    background-size: cover;
+    color: whitesmoke; 
+    text-align: center;
+    box-sizing: border-box;
+    border: 2px dotted salmon;
+    border-radius:  50px; 
+    opacity: 0.9;
+    filter: alpha(opacity=70);
+    display: none;
+
+}
+
+
