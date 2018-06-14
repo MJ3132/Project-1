@@ -91,7 +91,7 @@ div[class*="-page"] {
 .post {
 
     margin: 2px auto;
-    width: 60%;
+    width: 50vw;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://canadaumsonhoadois.files.wordpress.com/2016/06/13417571_1120451708016952_3252951837867309885_n.jpg?w=640')no-repeat white;
     background-size: cover;
     color: whitesmoke; 
@@ -104,7 +104,70 @@ div[class*="-page"] {
     display: none;
 
 }
+.aftersignin-page {
 
+    height: 100vh;
+    width: 100vw;
+  background: url(../assets/images/jumping_silhouette_group_of_people_cat_sea_reflection-176783.jpg!d);
+    background-size: cover;
+}
+
+#logout{
+    font-family: 'Archivo Black', sans-serif;
+    width: 10%;
+    float: right;
+    margin: 10px;
+}
+
+
+#suprise-me {
+    font-family: 'Lobster', cursive;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    width: 20%;
+    height: 70px;
+    opacity: 0.7;
+    border-radius: 45%;
+    background: red;
+
+}
+
+#suprise-me:hover {
+background:blue;
+ font-family: 'Permanent Marker', cursive;
+
+
+}
+
+#next-option {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width: 20%;
+    margin: 5px auto;
+    border-radius: 45%;
+}
+
+#next-option:hover{
+    background: blue;
+}
+.fa-arrow-circle-right{
+    font-size: 40px;
+  }
+
+  #gift{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+
+  }
+  .fa-gift {
+      font-size: 50px;
+
+  }
 
 
 

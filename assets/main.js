@@ -200,8 +200,9 @@ $("#suprise-me").on("click", function () {
                 },
                 start: eachEvent.start,
                 // end: eachEvent.end,
-                duration: eachEvent.duration,
-                description: eachEvent.description
+                labels: eachEvent.labels,
+                duration: eachEvent.duration
+               
 
             };
         });
@@ -220,11 +221,10 @@ $("#suprise-me").on("click", function () {
                     
                     <p>${i + 1}/${content.length}</p>
                     <h1 class="post-title">${content[i].title}</h1>
-                    <p class="post-description">${content[i].description}</p>
+                    <h2 class="post-description">Type:${content[i].labels}</h2>
                     <h2 class="post-location"></h2>
+                    <input type='hidden' value='${content[i].start}' name='start'.
                     <h2 class="post-start">${content[i].start}</h2>
-                    <h2 class="post-end">${content[i].end}</h2>
-                    <h2 class="post-duration">${content[i].duration}</h2>
 
                 </div>
             `;
@@ -249,9 +249,12 @@ function updateActivePostWithAddress() {
 
     // Change date formats
 
-    var startTime = activePost.find("input[class ='post-start']").val();
+    var startTime = activePost.find("input[name ='start']").val();
+    
     var changedStart = moment(startTime).format('MMMM Do YYYY, h:mm a');
-    activePost.find('.post-start').text(changedStart);
+
+    activePost.find(".post-start").text(changedStart);
+    console.log(changedStart);
 
     // var endTime = activePost.find("input[class ='post-end']").val();
     // var changedEnd = moment(endTime).format('MMMM Do YYYY, h:mm a');
@@ -259,16 +262,11 @@ function updateActivePostWithAddress() {
 
 
     // change Time Duration
-
-    
-
-
-    var duration = activePost.find("input[class ='post-duration']").val();
-    var formattedDur = moment.utc(duration*1000).format('H:mm');
-    activePost.find('.post-duration').text(formattedDur);
+    // var duration = activePost.find("input[class ='post-duration']").val();
+    // var formattedDur = moment.utc(duration*1000).format('H:mm');
+    // activePost.find('.post-duration').text(formattedDur);
 
 
-    console.log(startTime);   
     // get latitude and longitude in a var
 
     var lat = parseFloat(activePost.find("input[name ='lat']").val());
