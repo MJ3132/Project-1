@@ -325,11 +325,7 @@ function removeTask() {
     $(this).closest("div").remove();
 };
 
-
-
-
 //Reverse Geo-code coordinates to address from API response(location)
-
 
 function initMap() {
 
