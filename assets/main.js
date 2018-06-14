@@ -1,51 +1,3 @@
-let userLocation;
-// runVideo();
-// 
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        console.log("Geolocation is not supported by this browser.");
-    }
-};
-function showPosition(position) {
-    userLocation = position.coords;
-    console.log(userLocation);
-    var latlng = String(userLocation.latitude + ',' + userLocation.longitude);
-    console.log(" about to reverse Geo Code", latlng)
-    //run call in here
-    var settingsGoogle = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlng + "&key=AIzaSyCjU4tP9cgPggLk_lGUSzkwW75GgrsyLCY",
-        "method": "GET",
-    };
-    $.ajax(settingsGoogle).done(function (response) {
-        //extracted the info we need 
-        var country = response.results[0].address_components[6].long_name;
-        var stateProvince = response.results[0].address_components[5].long_name;
-        var city = response.results[0].address_components[3].long_name;
-    });
-};
-
-//deals with error for geolocation
-function showError(error) {
-    switch (error.code) {
-        case error.PERMISSION_DENIED:
-            x.innerHTML = "User denied the request for Geolocation."
-            break;
-        case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is unavailable."
-            break;
-        case error.TIMEOUT:
-            x.innerHTML = "The request to get user location timed out."
-            break;
-        case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred."
-            break;
-    }
-};
-
 ///user authentication stuff 
 var config = {
     apiKey: "AIzaSyDarVTsZc6k-a491eF6C8PgcSIwXqf0xNY",
@@ -120,68 +72,6 @@ firebase.auth().onAuthStateChanged(function (user) {
 
     }
 });
-
-// API Query URL + Parameters + AJAX CALLS
-var queryURL = "https://api.predicthq.com/v1/events?limit=1";
-var categories = ["conferences", "expos", "concerts", "festivals"];
-var search = "";
-var label = "";
-var queryURL = queryURL +
-
-
-    // Suprise Me button aka Gives Random Results
-    $("#suprise-me").on("click", function () {
-        // get random category to display
-        var ranNum = Math.floor(Math.random() * (categories.length - 1))
-        search = categories[ranNum];
-        queryURL += "&" + $.param({
-            'category': search,
-        });
-        $.ajax({
-            url: `https://api.predicthq.com/v1/events/?limit=1&within=10km@${userLocation.latitude}%2C${userLocation.longitude}`,
-            method: 'GET',
-            contentType: "application/json",
-            headers: {
-                Authorization: "Bearer 4SepDTuqqTQQgPSM68gLJpoJJoEpSB",
-                Accept: "application/json"
-            }
-        }).done(function (response) {
-            console.log(response);
-            console.log(userLocation.latitude);
-            console.log("hello world");
-            var answer = response.results;
-            console.log(answer);
-            var content = answer.map(function (eachEvent) {
-                console.log(eachEvent);
-
-                return {
-                    title: eachEvent.title,
-                    duration: eachEvent.duration
-                };
-
-            });
-
-            console.log(content);
-            var html = "";
-            for (var i = 0; i < content.length; i++) {
-                var postHTML = ` 
-                <div class="post">
-                    <h1 class="post-title">${content[i].title}</h1>
-                    <h1 class="post-title">${content[i].duration}</h1>
-
-                </div>
-            `;
-                console.log(postHTML);
-                html += postHTML;
-            }
-            $('#answer-div').html(html);
-        }).fail(function (err) {
-            // throw errs
-        });
-    });
-
-
-
 // Page Rendering Function ( shows specific page, while hiding the other containers with the class of -page)
 function isPageShownCurrently(page) {
     return false;
@@ -206,7 +96,6 @@ var video = $('.background-video');
 function runVideo(){
     video.get(0).play();
 };
-
 function pauseVideo() {
   video.get(0).pause();  
 };
@@ -217,7 +106,6 @@ $('#play').on('click', function(e)
     console.log('play');
 }
 );
-
 $('#pause').on('click', function(e) 
     {
     pauseVideo();
@@ -226,12 +114,10 @@ $('#pause').on('click', function(e)
 );
 
 //doing the footer stuff rn
-
 $('footer').on('click',function(e) {
     console.log('waddup');
     document.getElementById('overlay').style.display = "block";
 });
-
 $('#overlay').on('click',function(e) {
     console.log('waddup');
     document.getElementById('overlay').style.display = "none";
