@@ -53,18 +53,27 @@
             <button type="submit" class="signupbtn" id='logout'>Log Out</button>
         </div>
         <div id="userlocation">
-            
+
             <h3 id="city"></h3>
-            
-                <button id="suprise-me">Suprise Me! </button>
-                <!-- <button onclick="renderPage('signup');">Go to sign up page</button> -->
-          
+
+            <button id="suprise-me">Suprise Me! </button>
+            <!-- <button onclick="renderPage('signup');">Go to sign up page</button> -->
+
         </div>
         <div id="answer-div">
-            
-        </div>
-    </div>
 
+
+        </div>
+        <div id="map">
+
+        </div>
+        <button id="location-div"> </button>
+        <p id="latlng"></p>
+
+        <button id="next-option"> => </button>
+
+
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -73,6 +82,10 @@
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script async defer
+     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjU4tP9cgPggLk_lGUSzkwW75GgrsyLCY&callback=initMap">
+    </script>
     <script src="assets/main.js"></script>
 
 </body>
