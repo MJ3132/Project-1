@@ -1,4 +1,5 @@
 let userLocation;
+var geocoder;
 
 
 function reverseGeo(coordinates) {
@@ -66,6 +67,11 @@ function showError(error) {
             break;
     }
 };
+
+
+
+
+
 ///user authentication stuff 
 var config = {
     apiKey: "AIzaSyDarVTsZc6k-a491eF6C8PgcSIwXqf0xNY",
@@ -148,27 +154,26 @@ $('#next-option').on('click', function () {
     var activePost = $('.post.active')
     var nextActivePost = activePost.next();
     activePost.removeClass('active');
-    if( nextActivePost.length > 0 ){
+    if (nextActivePost.length > 0) {
         nextActivePost.addClass('active');
-    
+
     } else {
         activePost.siblings().first().addClass('active');
-        
     }
-   
- // End Next Button   
+     updateActivePostWithAddress();
+    // End Next Button   
 
 })
 
 // API Query URL + Parameters + AJAX CALLS
-var categories = ["expos","concerts","festivals","performing-arts","sports","community","conferences"];
+var categories = ["expos", "concerts", "festivals", "performing-arts", "sports", "community", "conferences"];
 
 // Suprise Me button aka Gives Random Results
 $("#suprise-me").on("click", function () {
-    document.querySelector('#answer-div').innerHTML='';
+    document.querySelector('#answer-div').innerHTML = '';
     var category = categories[Math.floor(Math.random() * (categories.length + 1))]
-   
- $.ajax({
+
+    $.ajax({
         url: `https://api.predicthq.com/v1/events/?within=10km@${userLocation.latitude}%2C${userLocation.longitude}&category=${category}`,
         method: 'GET',
         contentType: "application/json",
@@ -185,49 +190,114 @@ $("#suprise-me").on("click", function () {
         var content = answer.map(function (eachEvent) {
             console.log(eachEvent);
 
+
             return {
 
                 title: eachEvent.title,
+                location: {
+                    lat: eachEvent.location[1],
+                    lng: eachEvent.location[0]
+                },
+                start: eachEvent.start,
+                // end: eachEvent.end,
                 duration: eachEvent.duration,
-                location:  reverseGeo(eachEvent.location[1] + "," + eachEvent.location[0])
+                description: eachEvent.description
+
             };
         });
         console.log(content);
 
         var html = "";
-    
-
 
         for (var i = 0; i < content.length; i++) {
-           
+
+
             var postHTML = ` 
             
                 <div class="post${i === 0 ? " active" : ""}">
-                    <p>${i+1}/${content.length}</p>
+                    <input type='hidden' value='${content[i].location.lat}' name='lat'>
+                    <input type='hidden' value='${content[i].location.lng}' name='lng'>
+                    
+                    <p>${i + 1}/${content.length}</p>
                     <h1 class="post-title">${content[i].title}</h1>
-                    <p class="post-duration">${content[i].description}</p>
-                    <h2 class="post-location">${content[i].location}</h2>
-                    <h2 class="post-location">${content[i].start}</h2>
-                    <h2 class="post-location">${content[i].end}</h2>
+                    <p class="post-description">${content[i].description}</p>
+                    <h2 class="post-location"></h2>
+                    <h2 class="post-start">${content[i].start}</h2>
+                    <h2 class="post-end">${content[i].end}</h2>
                     <h2 class="post-duration">${content[i].duration}</h2>
 
                 </div>
             `;
-
-         
             console.log(postHTML);
             html += postHTML;
-   
         }
-      
+
         $('#answer-div').html(html);
-  
+        updateActivePostWithAddress();
+
 
     }).fail(function (err) {
         // throw errs
     });
 });
 
+
+function updateActivePostWithAddress() {
+
+    // get actively shown post aka active element,
+    var activePost = $('.post.active');
+
+    // Change date formats
+
+    var startTime = activePost.find("input[class ='post-start']").val();
+    var changedStart = moment(startTime).format('MMMM Do YYYY, h:mm a');
+    activePost.find('.post-start').text(changedStart);
+
+    // var endTime = activePost.find("input[class ='post-end']").val();
+    // var changedEnd = moment(endTime).format('MMMM Do YYYY, h:mm a');
+    // activePost.find('.post-end').text(changedEnd);
+
+
+    // change Time Duration
+
+    
+
+
+    var duration = activePost.find("input[class ='post-duration']").val();
+    var formattedDur = moment.utc(duration*1000).format('H:mm');
+    activePost.find('.post-duration').text(formattedDur);
+
+
+    console.log(startTime);   
+    // get latitude and longitude in a var
+
+    var lat = parseFloat(activePost.find("input[name ='lat']").val());
+
+    var lng = parseFloat(activePost.find("input[name ='lng']").val());
+
+
+
+    // reverse geo code latitude and longitude 
+
+    geocoder.geocode({ 'location': { lat: lat, lng: lng } }, function (results, status) {
+        console.log(status, results);
+        if (status === 'OK') {
+            if (results[0]) {
+
+                activePost.find('.post-location').text(results[0].formatted_address);
+
+            } else {
+                window.alert('No results found');
+            }
+        } else {
+            window.alert('Geocoder failed due to: ' + status);
+        }
+    });
+    // when we get reponse back (callback function), check for status and check for address, and add the address somewhere in the active post
+
+
+
+}
 
 
 // Page Rendering Function ( shows specific page, while hiding the other containers with the class of -page)
@@ -242,6 +312,7 @@ function renderPage(page) {
         });
     };
 };
+
 // End page rendering function
 // hide all pages except ...
 
@@ -249,10 +320,50 @@ delete button
 $(document).on("click", "#delete", removeTask);
 // Function to remove a task.
 function removeTask() {
+
     // Grab the closest div to the element that was clicked and remove it.
     // (In this case, the closest element is the one that's encapsulating it.)
+
     $(this).closest("div").remove();
 };
+
+
+
+
+//Reverse Geo-code coordinates to address from API response(location)
+
+
+function initMap() {
+
+    geocoder = new google.maps.Geocoder;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // once signed render suprise me page 
