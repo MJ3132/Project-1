@@ -192,29 +192,20 @@ $("#suprise-me").on("click", function () {
 
 
             return {
-
                 title: eachEvent.title,
                 location: {
                     lat: eachEvent.location[1],
                     lng: eachEvent.location[0]
                 },
                 start: eachEvent.start,
-                // end: eachEvent.end,
                 labels: eachEvent.labels,
                 duration: eachEvent.duration
-               
-
             };
         });
         console.log(content);
-
         var html = "";
-
         for (var i = 0; i < content.length; i++) {
-
-
             var postHTML = ` 
-            
                 <div class="post${i === 0 ? " active" : ""}">
                     <input type='hidden' value='${content[i].location.lat}' name='lat'>
                     <input type='hidden' value='${content[i].location.lng}' name='lng'>
@@ -231,49 +222,31 @@ $("#suprise-me").on("click", function () {
             console.log(postHTML);
             html += postHTML;
         }
-
         $('#answer-div').html(html);
         updateActivePostWithAddress();
-
-
     }).fail(function (err) {
         // throw errs
     });
 });
 
-
 function updateActivePostWithAddress() {
-
-    // get actively shown post aka active element,
+    //get active post
     var activePost = $('.post.active');
-
     // Change date formats
-
     var startTime = activePost.find("input[name ='start']").val();
-    
     var changedStart = moment(startTime).format('MMMM Do YYYY, h:mm a');
-
     activePost.find(".post-start").text(changedStart);
     console.log(changedStart);
-
-    // var endTime = activePost.find("input[class ='post-end']").val();
-    // var changedEnd = moment(endTime).format('MMMM Do YYYY, h:mm a');
-    // activePost.find('.post-end').text(changedEnd);
-
 
     // change Time Duration
     // var duration = activePost.find("input[class ='post-duration']").val();
     // var formattedDur = moment.utc(duration*1000).format('H:mm');
     // activePost.find('.post-duration').text(formattedDur);
 
-
     // get latitude and longitude in a var
 
     var lat = parseFloat(activePost.find("input[name ='lat']").val());
-
     var lng = parseFloat(activePost.find("input[name ='lng']").val());
-
-
 
     // reverse geo code latitude and longitude 
 
@@ -281,7 +254,6 @@ function updateActivePostWithAddress() {
         console.log(status, results);
         if (status === 'OK') {
             if (results[0]) {
-
                 activePost.find('.post-location').text(results[0].formatted_address);
 
             } else {
@@ -292,12 +264,12 @@ function updateActivePostWithAddress() {
         }
     });
     // when we get reponse back (callback function), check for status and check for address, and add the address somewhere in the active post
-
-
-
 }
 
-
+//Reverse Geo-code coordinates to address from API response(location)
+function initMap() {
+    geocoder = new google.maps.Geocoder;
+}
 // Page Rendering Function ( shows specific page, while hiding the other containers with the class of -page)
 function isPageShownCurrently(page) {
     return false;
@@ -310,28 +282,7 @@ function renderPage(page) {
         });
     };
 };
-
 // End page rendering function
-// hide all pages except ...
-
-delete button
-$(document).on("click", "#delete", removeTask);
-// Function to remove a task.
-function removeTask() {
-
-    // Grab the closest div to the element that was clicked and remove it.
-    // (In this case, the closest element is the one that's encapsulating it.)
-
-    $(this).closest("div").remove();
-};
-
-//Reverse Geo-code coordinates to address from API response(location)
-
-function initMap() {
-
-    geocoder = new google.maps.Geocoder;
-
-}
 
 
 
@@ -360,62 +311,3 @@ function initMap() {
 
 
 
-// once signed render suprise me page 
-// renderPage('signup');
-
-
-
-// how for loop every event
-
-
-
-
-
-// Query.ajax("https://www.reddit.com/.json").done(function(response) {
-//     // console.log(response);
-//     var children = response.data.children; // easier to work with
-//     var posts = [];
-//     console.log(posts);
-//     for (var i = 0; i < children.length; i++) {
-//         var myObject = {
-//             title: children[i].data.title,
-//             author: children[i].data.author
-//         };
-//         posts.push(myObject);
-//     }
-
-    // optionally, use map to transform the data to
-    // return a *NEW* array (doesn't modify the existing array)
-    // with the new element
-    // DOES THE EXACT SAME THING!!!!!
-//     var posts2 = children.map(function(eachElement) {
-//         // return what you want the new element to be
-//         return {
-//             title: eachElement.data.title,
-//             author: eachElement.data.author
-//         };
-//     });
-
-//     renderPosts(posts);
-// });
-
-// function renderPosts(posts) {
-//     // [{title: "...", author: "..."}, ...]
-//     var html = "";
-//     for (var i = 0; i < posts.length; i++) {
-//         var postHMTL = `
-//           <div class="post">
-//             <h1 class="post-title">${posts[i].title}</h1>
-//             <span class="post-author">(${posts[i].author})</span>
-//           </div>
-//         `;
-//         console.log(postHMTL);
-//         html += postHMTL;
-//     }
-//     document.body.innerHTML = html;
-// }
-
-
-   // // get random category to display
-    // // var ranNum = Math.floor(Math.random() * (categories.length -1))
-    // search = categories[ranNum];
