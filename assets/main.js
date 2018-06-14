@@ -70,8 +70,6 @@ function showError(error) {
 
 
 
-
-
 ///user authentication stuff 
 var config = {
     apiKey: "AIzaSyDarVTsZc6k-a491eF6C8PgcSIwXqf0xNY",
@@ -138,6 +136,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         var uid = user.uid;
         var providerData = user.providerData;
         renderPage('aftersignin');
+        
         getLocation();
     } else {
         // User is signed out.
@@ -280,34 +279,38 @@ function renderPage(page) {
         $('[class*="-page"]').hide(400, function () {
             $(`.${page}-page`).show(400);
         });
-    };
+    }
 };
 // End page rendering function
 
+//video background
+var video = $('.background-video');
+function runVideo(){
+    video.get(0).play();
+};
+function pauseVideo() {
+  video.get(0).pause();  
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$('#play').on('click', function(e) 
+    {
+    runVideo();
+    console.log('play');
+}
+);
+$('#pause').on('click', function(e) 
+    {
+    pauseVideo();
+    console.log('pause');
+}
+);
+//doing the footer stuff rn
+$('footer').on('click',function(e) {
+    console.log('waddup');
+    document.getElementById('overlay').style.display = "block";
+});
+$('#overlay').on('click',function(e) {
+    console.log('waddup');
+    document.getElementById('overlay').style.display = "none";
+});
 
