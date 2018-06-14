@@ -97,7 +97,7 @@ footer {
     position: absolute;
     bottom: 0;
     width:100%;
-    height:50px;   /* Height of the footer */
+    height:50px;  
     background: #343a40;
     color: grey;
     text-align: center;
@@ -116,8 +116,6 @@ footer {
 .div-wrapper {
     min-height: calc(100vh - 50px);
     padding-top: 300px;
-    /* background-image: url('app-background-blur-545331.jpg');
-    background-size: 944px 850px; */
 }
 
 .video-container {
@@ -131,20 +129,10 @@ footer {
 }
 
 .background-video {
-    /* position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: 944px 850px; */
     min-width: 100%; 
-    min-height: 100%; 
-
-    /* Setting width & height to auto prevents the browser from stretching or squishing the video */
+    min-height: 100%;     
     width: auto;
     height: auto;
-
-    /* Center the video */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -166,7 +154,7 @@ footer {
     float: left;
 
 }
-/* working on the over to display section about the app */
+
 #overlay {
     position: fixed;
     display: none;
