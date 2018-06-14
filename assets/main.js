@@ -136,12 +136,15 @@ firebase.auth().onAuthStateChanged(function (user) {
         var uid = user.uid;
         var providerData = user.providerData;
         renderPage('aftersignin');
-        
+        $('.footer').hide();
+        $('.div-wrapper').hide();
         getLocation();
     } else {
         // User is signed out.
         // ...
         renderPage('beforesignin');
+        $('.footer').show();
+        $('.div-wrapper').show();
 
     }
 });
